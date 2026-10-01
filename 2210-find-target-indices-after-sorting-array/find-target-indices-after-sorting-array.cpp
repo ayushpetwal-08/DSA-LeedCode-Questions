@@ -1,46 +1,15 @@
-int firstOccurence(vector<int>& nums, int target){
-    int low = 0, high = nums.size() - 1;
-    int first = -1;
-    while(low <= high){
-        int mid = low + (high - low) / 2;
-        if(nums[mid] == target){
-            first = mid;
-            high = mid - 1;
-        }else if(target > nums[mid]){
-            low = mid + 1;
-        }else{
-            high = mid - 1;
-        }
-    }
-    return first;
-}
-int lastOccurence(vector<int>& nums, int target){
-    int low = 0, high = nums.size() - 1;
-    int last = -1;
-    while(low <= high){
-        int mid = low + (high - low) / 2;
-        if(nums[mid] == target){
-            last = mid;
-            low = mid + 1;
-        }else if(target > nums[mid]){
-            low = mid + 1;
-        }else{
-            high = mid - 1;
-        }
-    }
-    return last;
-}
-
 class Solution {
 public:
     vector<int> targetIndices(vector<int>& nums, int target) {
-        sort(nums.begin(), nums.end());
-        int first = firstOccurence(nums, target);
-        if(first == -1) return {};
-        int last = lastOccurence(nums, target);
+        int count_less = 0;
+        int count_target = 0;
+        for(int x : nums){
+            if(x < target) count_less++;
+            else if(x == target) count_target++;
+        }
         vector<int>ans;
-        for(int i=first; i<= last; i++){
-            ans.push_back(i);
+        for(int i=0; i<count_target; i++){
+            ans.push_back(count_less + i);
         }
         return ans;
     }
