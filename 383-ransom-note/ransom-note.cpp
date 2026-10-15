@@ -1,16 +1,15 @@
 class Solution {
 public:
     bool canConstruct(string ransomNote, string magazine) {
-        int charCount[26] = {0};
-
+        unordered_map<char, int> hashTable;
         for(char c : magazine){
-            charCount[c - 'a']++;
+            hashTable[c]++;
         }
-
         for(char c : ransomNote){
-            charCount[c - 'a']--;
-            
-            if(charCount[c -'a'] < 0) return false;
+            if(hashTable.find(c) == hashTable.end() || hashTable[c] == 0){
+                return false;
+            }
+            hashTable[c]--;
         }
         return true;
     }
